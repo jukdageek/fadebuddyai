@@ -41,6 +41,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.ui.components.CameraTelemetryPreviewSurface
 import com.example.ui.theme.CopperAccent
 import com.example.ui.theme.CyanAccent
 import com.example.ui.theme.DarkNavySurface
@@ -79,28 +80,56 @@ fun HairAnalyzerScreen(
             Spacer(modifier = Modifier.height(16.dp))
         }
 
-        // Camera Scan Simulator Box
+        // Live Camera Telemetry Surface with overlay HUD
         item {
-            Card(
+            CameraTelemetryPreviewSurface(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(200.dp)
                     .padding(bottom = 16.dp)
                     .testTag("card_camera_scanner"),
-                colors = CardDefaults.cardColors(containerColor = DarkNavySurface),
-                shape = RoundedCornerShape(16.dp)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(20.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Icon(imageVector = Icons.Default.CameraAlt, contentDescription = null, tint = CyanAccent, modifier = Modifier.size(36.dp))
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text("Optical Camera Density Analysis", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = TextPrimary)
-                    Text("Select client hair parameters or run optical scan for custom guard sequence.", fontSize = 11.sp, color = TextSecondary)
+                overlayContent = {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(12.dp),
+                        verticalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Surface(
+                            shape = RoundedCornerShape(6.dp),
+                            color = DeepNavy.copy(alpha = 0.85f)
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Surface(
+                                    shape = androidx.compose.foundation.shape.CircleShape,
+                                    color = CyanAccent,
+                                    modifier = Modifier.size(8.dp)
+                                ) {}
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text(
+                                    text = "LIVE CAMERA FEED • DENSITY OPTICS ACTIVE",
+                                    fontSize = 10.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = CyanAccent
+                                )
+                            }
+                        }
+
+                        Text(
+                            text = "Point camera at client's crown or parietal ridge to assist AI texture detection",
+                            fontSize = 11.sp,
+                            color = TextPrimary,
+                            fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier
+                                .background(DeepNavy.copy(alpha = 0.75f), RoundedCornerShape(6.dp))
+                                .padding(horizontal = 8.dp, vertical = 4.dp)
+                        )
+                    }
                 }
-            }
+            )
         }
 
         // Form Parameters
