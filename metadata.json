@@ -1,0 +1,6 @@
+{
+  "name": "FadeBuddyAI",
+  "description": "Smart Clipper coaching, fade planner, live telemetry, and client profiles.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
