@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.SettingsSuggest
+import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -32,6 +33,7 @@ import com.example.ui.screens.DiagnosticsScreen
 import com.example.ui.screens.GuidedCutScreen
 import com.example.ui.screens.HairAnalyzerScreen
 import com.example.ui.screens.HomeScreen
+import com.example.ui.screens.LiveTelemetryScreen
 import com.example.ui.theme.CopperAccent
 import com.example.ui.theme.CyanAccent
 import com.example.ui.theme.DarkNavySurface
@@ -47,6 +49,7 @@ sealed class NavDestination(val route: String, val title: String, val icon: Imag
     object Profiles : NavDestination("profiles", "Clients", Icons.Default.Group)
     object Diagnostics : NavDestination("diagnostics", "Clipper Health", Icons.Default.SettingsSuggest)
     object HairAnalyzer : NavDestination("hair_analyzer", "AI Advisor", Icons.Default.AutoAwesome)
+    object LiveTelemetry : NavDestination("live_telemetry", "Live Feed", Icons.Default.Visibility)
 }
 
 val bottomNavItems = listOf(
@@ -55,7 +58,8 @@ val bottomNavItems = listOf(
     NavDestination.GuidedCut,
     NavDestination.Profiles,
     NavDestination.Diagnostics,
-    NavDestination.HairAnalyzer
+    NavDestination.HairAnalyzer,
+    NavDestination.LiveTelemetry
 )
 
 @Composable
@@ -149,6 +153,9 @@ fun FadeBuddyAppContent(viewModel: MainViewModel) {
                         navController.navigate(NavDestination.CutPlanner.route)
                     }
                 )
+            }
+            composable(NavDestination.LiveTelemetry.route) {
+                LiveTelemetryScreen()
             }
         }
     }
